@@ -5,15 +5,16 @@ const cors = require('cors');
 const { sendMail } = require('./Controller/Mailsending');
 
 const app = express();
-const allowedOrigins = (process.env.FRONTEND_ORIGIN || 'http://localhost:5173')
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+const allowedOrigins = new Set([
+  'http://localhost:5173',
+  'https://www-mywebsite-sudheer-com.vercel.app',
+  ...(process.env.FRONTEND_ORIGIN || '').split(',').map((origin) => origin.trim()),
+].filter(Boolean));
 
 app.disable('x-powered-by');
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.has(origin)) {
       return callback(null, true);
     }
     return callback(new Error('Origin is not allowed by CORS.'));

@@ -13,4 +13,6 @@ The contact form sends `POST /api/contact` with `{ "name": "...", "email": "..."
 
 ## Deploy
 
-Set the SMTP variables from `.env.example` and `FRONTEND_ORIGIN` to your deployed website's origin in the backend hosting environment. Keep `.env` out of source control. Configure the frontend build's `VITE_API_URL` to the backend base URL when the API is hosted on a different origin; otherwise, route `/api` to this backend through your hosting provider's reverse proxy.
+The frontend uses `https://my-website-baackend.onrender.com` for production requests by default. To override it, set `VITE_API_URL` in the Vercel project to the backend base URL and redeploy. The backend accepts the deployed Vercel origin and `http://localhost:5173`; set `FRONTEND_ORIGIN` in Render if you use a different frontend domain.
+
+Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, and `CONTACT_EMAIL` in Render's environment settings. Never commit real credentials; keep `.env` out of source control and use placeholders in `.env.example`. Redeploy the backend after changing backend code or environment values, and redeploy the frontend after changing frontend code or Vercel environment variables.
